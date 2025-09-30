@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import ApiError from "../types/ApiError";
+import { authService } from "../services/authService";
 
 function SignUpComponent() {
   const [username, setUsername] = useState("");
@@ -12,11 +13,7 @@ function SignUpComponent() {
 
     if (username && email && password) {
       try {
-        await api.post("/auth/signup", {
-          username: username,
-          email: email,
-          password: password,
-        });
+        await authService.signup({ username, email, password });
 
         // TODO: Encaminhar para uma página de home ou algo do tipo
         console.log("Sucesso no seu cadastro");
