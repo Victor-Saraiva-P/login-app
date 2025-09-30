@@ -15,8 +15,8 @@ class ApiError {
     } else {
       // Error genérico
       this.status = 500;
-      this.type = 'front-end/unexpected-error';
-      this.title = 'Erro de sistema';
+      this.type = "front-end/unexpected-error";
+      this.title = "Erro de sistema";
       this.detail = '"Erro no sistema tente novamente"';
     }
   }

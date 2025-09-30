@@ -1,13 +1,12 @@
 import api from "./api";
 
-interface LoginRequestDTO{
+interface LoginRequestDTO {
   email: string;
   password: string;
 }
-interface SignupRequestDTO extends LoginRequestDTO{
+interface SignupRequestDTO extends LoginRequestDTO {
   username: string;
 }
-
 
 const AUTH_CONTROLLER_PATH = "/auth";
 
