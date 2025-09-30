@@ -1,5 +1,4 @@
 import { useState } from "react";
-import api from "../services/api";
 import ApiError from "../types/ApiError";
 import { authService } from "../services/authService";
 
