@@ -35,6 +35,11 @@ export const authService = {
     return response.data;
   },
 
+  logout: async () => {
+    await api.post(`${AUTH_CONTROLLER_PATH}/logout`);
+    accessToken = null;
+  },
+
   ping: async () => {
     const response = await api.get(`${AUTH_CONTROLLER_PATH}/ping`);
 
