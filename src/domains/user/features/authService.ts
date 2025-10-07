@@ -1,4 +1,4 @@
-import api from "./api";
+import apiClient from "../../../global/services/apiClient";
 
 interface LoginRequestDTO {
   email: string;
@@ -20,7 +20,7 @@ export const authService = {
   },
 
   signup: async (data: SignupRequestDTO) => {
-    const response = await api.post(`${AUTH_CONTROLLER_PATH}/signup`, data);
+    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/signup`, data);
 
     accessToken = response.data.accessToken;
 
@@ -28,7 +28,7 @@ export const authService = {
   },
 
   login: async (data: LoginRequestDTO) => {
-    const response = await api.post(`${AUTH_CONTROLLER_PATH}/login`, data);
+    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/login`, data);
 
     accessToken = response.data.accessToken;
 
@@ -36,12 +36,12 @@ export const authService = {
   },
 
   logout: async () => {
-    await api.post(`${AUTH_CONTROLLER_PATH}/logout`);
+    await apiClient.post(`${AUTH_CONTROLLER_PATH}/logout`);
     accessToken = null;
   },
 
   ping: async () => {
-    const response = await api.get(`${AUTH_CONTROLLER_PATH}/ping`);
+    const response = await apiClient.get(`${AUTH_CONTROLLER_PATH}/ping`);
 
     console.log("Ping bem sucedido:", response.data);
     

@@ -1,12 +1,12 @@
-import { authService } from "./authService";
+import { authService } from "../../domains/user/features/authService";
 import axios, {
   AxiosError,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from "axios";
-import { config } from "../config";
+import { config } from "../../envVariables";
 
-const api = axios.create({
+const apiClient = axios.create({
   baseURL: config.apiBaseUrl,
   withCredentials: true, // axios enviar cookies
 });
@@ -16,11 +16,11 @@ interface RetryableAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 async function refreshToken(){
-  const response = await api.post("/auth/refresh-token");
+  const response = await apiClient.post("/auth/refresh-token");
   return response.data.accessToken;
 }
 
-api.interceptors.request.use(
+apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token = authService.getAccessToken();
     if (token) {
@@ -33,7 +33,7 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => response,
   async (error: AxiosError) => {
     // Usamos nossa interface customizada aqui
@@ -59,7 +59,7 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         console.log("Token renovado. Refazendo a chamada original...");
-        return api(originalRequest);
+        return apiClient(originalRequest);
       } catch (refreshError) {
         console.error(
           "Não foi possível renovar o token. Deslogando...",
@@ -74,4 +74,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default apiClient;
