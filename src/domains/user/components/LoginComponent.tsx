@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ApiError from "../types/ApiError";
-import { authService } from "../services/authService";
+import ApiError from "../../../global/types/ApiError";
+import { authService } from "../features/authService";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");

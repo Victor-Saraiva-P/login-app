@@ -1,5 +1,5 @@
-import { authService } from "../services/authService";
-import ApiError from "../types/ApiError";
+import { authService } from "../features/authService";
+import ApiError from "../../../global/types/ApiError";
 
 function PingComponent() {
   async function handleClick() {
