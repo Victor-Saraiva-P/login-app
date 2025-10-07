@@ -1,13 +1,18 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import HomeRouter from "./global/router/HomeRouter.tsx";
-import UserRouter from "./global/router/UserRouter.tsx";
+import HomePage from "./domains/home/HomePage.tsx";
+import LoginComponent from "./domains/user/components/LoginComponent.tsx";
+import SignUpComponent from "./domains/user/components/SignUpComponent.tsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <HomeRouter />
-      <UserRouter />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<LoginComponent />} />
+        <Route path="/signup" element={<SignUpComponent />} />
+      </Routes>
     </BrowserRouter>
   );
 }
