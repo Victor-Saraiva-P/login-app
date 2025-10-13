@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function HomePage() {
+function WelcomePage() {
   return (
     <div className="container">
       <h1>Bem-vindo ao Sistema</h1>
@@ -17,4 +17,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default WelcomePage;
