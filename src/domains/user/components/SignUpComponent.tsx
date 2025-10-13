@@ -1,11 +1,14 @@
 import { useState } from "react";
 import ApiError from "../../../global/types/ApiError";
 import { authService } from "../features/authService";
+import { useNavigate } from "react-router-dom";
 
 function SignUpComponent() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -14,8 +17,8 @@ function SignUpComponent() {
       try {
         await authService.signup({ username, email, password });
 
-        // TODO: Encaminhar para uma página de home ou algo do tipo
-        console.log("Sucesso no seu cadastro");
+        // Redirecionar para a página de ping após o signup bem-sucedido
+        navigate("/ping");
       } catch (error) {
         const appError = new ApiError(error);
         // TODO: Encaminhar para uma página de error ou um pop up
