@@ -7,16 +7,14 @@ import PingComponent from "./domains/user/components/PingComponent.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/welcome" />} />
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/login" element={<LoginComponent />} />
-        <Route path="/signup" element={<SignUpComponent />} />
-        <Route path="/ping" element={<PingComponent />} />
-        <Route path="*" element={<Navigate to="/welcome" />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Navigate to="/welcome" />} />
+      <Route path="/welcome" element={<WelcomePage />} />
+      <Route path="/login" element={<LoginComponent />} />
+      <Route path="/signup" element={<SignUpComponent />} />
+      <Route path="/ping" element={<PingComponent />} />
+      <Route path="*" element={<Navigate to="/welcome" />} />
+    </Routes>
   );
 }
 
