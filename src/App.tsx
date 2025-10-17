@@ -1,9 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import WelcomePage from "./domains/welcome/WelcomePage.tsx";
 import LoginComponent from "./domains/user/components/LoginComponent.tsx";
 import SignUpComponent from "./domains/user/components/SignUpComponent.tsx";
 import PingComponent from "./domains/user/components/PingComponent.tsx";
+import "./global/http/authInterceptor";
 
 function App() {
   return (
