@@ -1,6 +1,6 @@
-import apiClient from "../../../global/services/apiClient";
+import apiClient from "../../../global/api/apiClient";
 
-interface LoginRequestDTO {
+export interface LoginRequestDTO {
   email: string;
   password: string;
 }
@@ -8,43 +8,46 @@ interface SignupRequestDTO extends LoginRequestDTO {
   username: string;
 }
 
+interface AuthResponseDTO {
+  accessToken: string;
+}
+
 const AUTH_CONTROLLER_PATH = "/auth";
 
-let accessToken: string | null = null;
-
 export const authService = {
-  getAccessToken: (): string | null => accessToken,
+  refreshToken: async (): Promise<AuthResponseDTO> => {
+    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/refreshToken`);
 
-  setAccessToken: (token: string): void => {
-    accessToken = token;
+    return response.data.accessToken;
   },
 
-  signup: async (data: SignupRequestDTO) => {
-    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/signup`, data);
+  signup: async (data: SignupRequestDTO): Promise<AuthResponseDTO> => {
+    const response = await apiClient.post(
+      `${AUTH_CONTROLLER_PATH}/signup`,
+      data
+    );
 
-    accessToken = response.data.accessToken;
-
-    return response.data;
+    return response.data.accessToken;
   },
 
-  login: async (data: LoginRequestDTO) => {
-    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/login`, data);
+  login: async (data: LoginRequestDTO): Promise<AuthResponseDTO> => {
+    const response = await apiClient.post(
+      `${AUTH_CONTROLLER_PATH}/login`,
+      data
+    );
 
-    accessToken = response.data.accessToken;
-
-    return response.data;
+    return response.data.accessToken;
   },
 
   logout: async () => {
     await apiClient.post(`${AUTH_CONTROLLER_PATH}/logout`);
-    accessToken = null;
   },
 
   ping: async () => {
     const response = await apiClient.get(`${AUTH_CONTROLLER_PATH}/ping`);
 
     console.log("Ping bem sucedido:", response.data);
-    
+
     return response.data;
   },
 };
