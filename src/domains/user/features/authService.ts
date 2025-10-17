@@ -1,4 +1,4 @@
-import apiClient from "../../../global/api/apiClient";
+import { apiPublic } from "../../../global/http/clients";
 
 export interface LoginRequestDTO {
   email: string;
@@ -16,38 +16,30 @@ const AUTH_CONTROLLER_PATH = "/auth";
 
 export const authService = {
   refreshToken: async (): Promise<AuthResponseDTO> => {
-    const response = await apiClient.post(`${AUTH_CONTROLLER_PATH}/refreshToken`);
+    const response = await apiPublic.post(`${AUTH_CONTROLLER_PATH}/refresh-token`);
 
-    return response.data.accessToken;
+    return response.data;
   },
 
   signup: async (data: SignupRequestDTO): Promise<AuthResponseDTO> => {
-    const response = await apiClient.post(
+    const response = await apiPublic.post(
       `${AUTH_CONTROLLER_PATH}/signup`,
       data
     );
 
-    return response.data.accessToken;
+    return response.data;
   },
 
   login: async (data: LoginRequestDTO): Promise<AuthResponseDTO> => {
-    const response = await apiClient.post(
+    const response = await apiPublic.post(
       `${AUTH_CONTROLLER_PATH}/login`,
       data
     );
 
-    return response.data.accessToken;
+    return response.data;
   },
 
   logout: async () => {
-    await apiClient.post(`${AUTH_CONTROLLER_PATH}/logout`);
-  },
-
-  ping: async () => {
-    const response = await apiClient.get(`${AUTH_CONTROLLER_PATH}/ping`);
-
-    console.log("Ping bem sucedido:", response.data);
-
-    return response.data;
+    await apiPublic.post(`${AUTH_CONTROLLER_PATH}/logout`);
   },
 };
