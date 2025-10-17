@@ -5,6 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import { config } from "../../envVariables";
+import { tokenManager } from "../utils/tokenManager";
 
 const apiClient = axios.create({
   baseURL: config.apiBaseUrl,
@@ -22,7 +23,7 @@ async function refreshToken(){
 
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const token = authService.getAccessToken();
+    const token = tokenManager.getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -53,7 +54,7 @@ apiClient.interceptors.response.use(
 
         const newAccessToken = await refreshToken();
 
-        authService.setAccessToken(newAccessToken);
+        tokenManager.setToken(newAccessToken);
 
         // Atualiza o cabeçalho da requisição original
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
