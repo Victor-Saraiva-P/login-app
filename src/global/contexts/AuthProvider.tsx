@@ -1,11 +1,16 @@
-import { useState, useEffect, type ReactNode } from 'react';
-import { AuthContext, type AuthContextType } from './AuthContext';
-import { tokenManager } from '../utils/tokenManager';
-import { authService, type LoginRequestDTO } from '../../domains/user/features/authService';
+import { useState, useEffect, type ReactNode } from "react";
+import { AuthContext, type AuthContextType } from "./AuthContext";
+import { tokenManager } from "../utils/tokenManager";
+import {
+  authService,
+  type LoginRequestDTO,
+} from "../../domains/user/features/authService";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
+
+let isRefreshing = false;
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -15,24 +20,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const setReactiveAndLetAccessToken = (token: string | null) => {
     setAccessToken(token); // Atualiza o estado REATIVO do React
-    tokenManager.setToken(token); // Atualiza a PONTE para o apiClient
+    tokenManager.setToken(token); // Atualiza a PONTE
   };
 
   useEffect(() => {
+    if (isRefreshing) return;
+    isRefreshing = true;
+
     const verifySession = async () => {
       try {
         const response = await authService.refreshToken();
+        console.log("Resposta do refreshToken:", response);
 
-        if (response.accessToken && response.accessToken) {
+        if (response.accessToken) {
           setReactiveAndLetAccessToken(response.accessToken);
           console.log("Sessão restaurada com sucesso.");
         }
       } catch (error) {
         console.log("Nenhuma sessão ativa encontrada. ", error);
-
-        setAccessToken(null); // Limpa o token local
+        setReactiveAndLetAccessToken(null);
       } finally {
         setIsLoading(false);
+        isRefreshing = false; // Reset apenas no final
       }
     };
 

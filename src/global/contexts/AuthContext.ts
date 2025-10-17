@@ -1,6 +1,5 @@
 import {
   createContext,
-  type ReactNode,
 } from "react";
 import {
   type LoginRequestDTO,
@@ -14,9 +13,6 @@ export interface AuthContextType {
   logout: () => Promise<void>;
 }
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
