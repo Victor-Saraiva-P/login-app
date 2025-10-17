@@ -1,11 +1,12 @@
 import { useState } from "react";
 import ApiError from "../../../global/types/ApiError";
-import { authService } from "../features/authService";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../global/hooks/useAuth";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ function LoginComponent() {
 
     if (email && password) {
       try {
-        await authService.login({ email, password });
+        await login({ email, password });
 
         // Redirecionar para a página de ping após o login bem-sucedido
         navigate("/ping");
