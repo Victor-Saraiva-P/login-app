@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApiError from "../../../global/types/ApiError";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../global/hooks/useAuth";
@@ -6,7 +6,7 @@ import { useAuth } from "../../../global/hooks/useAuth";
 function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, accessToken } = useAuth();
 
   const navigate = useNavigate();
 
@@ -27,6 +27,12 @@ function LoginComponent() {
       }
     }
   }
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/ping");
+    }
+  }, [accessToken, navigate]);
 
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
