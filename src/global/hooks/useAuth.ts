@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 // 1. IMPORTA O CONTEXTO do arquivo do provedor
-import { AuthContext } from '../contexts/AuthContext'; 
+import { AuthContext } from '../types/AuthContext'; 
 import type { LoginRequestDTO } from '../../domains/user/features/authService';
 
 // (A interface AuthContextType pode ser importada ou redefinida aqui)

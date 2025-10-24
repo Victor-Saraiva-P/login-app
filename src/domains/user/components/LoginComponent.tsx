@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ApiError from "../../../global/types/ApiError";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../global/hooks/useAuth";
+import toast from "react-hot-toast";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");
@@ -21,9 +22,9 @@ function LoginComponent() {
         // Redirecionar para a página de ping após o login bem-sucedido
         navigate("/ping");
       } catch (error) {
-        const appError = new ApiError(error);
+        const apiError = new ApiError(error);
         // TODO: Encaminhar para uma página de error ou um pop up
-        console.log(appError.detail);
+        toast.error(`${apiError.title} - ${apiError.detail}`);
       }
     }
   }

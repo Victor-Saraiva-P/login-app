@@ -1,5 +1,5 @@
 import { useState, useEffect, type ReactNode } from "react";
-import { AuthContext, type AuthContextType } from "./AuthContext";
+import { AuthContext, type AuthContextType } from "../types/AuthContext";
 import { tokenManager } from "../utils/tokenManager";
 import {
   authService,

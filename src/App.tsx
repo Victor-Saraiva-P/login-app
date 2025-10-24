@@ -5,17 +5,22 @@ import LoginComponent from "./domains/user/components/LoginComponent.tsx";
 import SignUpComponent from "./domains/user/components/SignUpComponent.tsx";
 import PingComponent from "./domains/user/components/PingComponent.tsx";
 import "./global/http/authInterceptor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/welcome" />} />
-      <Route path="/welcome" element={<WelcomePage />} />
-      <Route path="/login" element={<LoginComponent />} />
-      <Route path="/signup" element={<SignUpComponent />} />
-      <Route path="/ping" element={<PingComponent />} />
-      <Route path="*" element={<Navigate to="/welcome" />} />
-    </Routes>
+    <>
+      <Toaster />
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/welcome" />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/login" element={<LoginComponent />} />
+        <Route path="/signup" element={<SignUpComponent />} />
+        <Route path="/ping" element={<PingComponent />} />
+        <Route path="*" element={<Navigate to="/welcome" />} />
+      </Routes>
+    </>
   );
 }
 
